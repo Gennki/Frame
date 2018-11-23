@@ -1,67 +1,29 @@
 package com.qzb.common.base;
 
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
 
 import com.qzb.common.baserx.RxManager;
-import com.qzb.common.util.TUtil;
 import com.qzb.common.util.ToastUtil;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 
-
-/**
- * 基类
- */
-
-/***************使用例子*********************/
-//1.mvp模式
-//public class SampleActivity extends BaseActivity<NewsChanelPresenter, NewsChannelModel>implements NewsChannelContract.View {
-//    @Override
-//    public int getLayoutId() {
-//        return R.layout.activity_news_channel;
-//    }
-//
-//    @Override
-//    public void initPresenter() {
-//        mPresenter.setVM(this, mModel);
-//    }
-//
-//    @Override
-//    public void initView() {
-//    }
-//}
-//2.普通模式
-//public class SampleActivity extends BaseActivity {
-//    @Override
-//    public int getLayoutId() {
-//        return R.layout.activity_news_channel;
-//    }
-//
-//    @Override
-//    public void initPresenter() {
-//    }
-//
-//    @Override
-//    public void initView() {
-//    }
-//}
-public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel> extends Activity {
-    public T mPresenter;
-    public E mModel;
+public abstract class BaseActivity extends AppCompatActivity {
+    public List<BasePresenter> mPresenters;
     public Context mContext;
     public RxManager mRxManager;
     private boolean isConfigChange = false;
     protected final String TAG = getClass().getSimpleName();
     protected boolean isFinished = false;
-//    private Unbinder unbinder;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,16 +31,10 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
         isFinished = false;
         isConfigChange = false;
         mRxManager = new RxManager();
+        mPresenters = new ArrayList<>();
         doBeforeSetcontentView();
         setContentView(getLayoutId());
         mContext = this;
-        mPresenter = TUtil.getT(this, 0);
-//        unbinder = ButterKnife.bind(this);
-
-        mModel = TUtil.getT(this, 1);
-        if (mPresenter != null) {
-            mPresenter.mContext = this;
-        }
         this.initPresenter();
         this.initView();
     }
@@ -93,6 +49,24 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         // 无状态栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
+    /**
+     * 创建Presenter
+     */
+    protected BasePresenter getPresenter(Class presenterClass, Class modelClass) {
+        try {
+            BasePresenter presenter = (BasePresenter) presenterClass.newInstance();
+            presenter.setVM(this, modelClass.newInstance());
+            presenter.mContext = this;
+            mPresenters.add(presenter);
+            return presenter;
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /*********************子类实现*****************************/
@@ -115,8 +89,9 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        unbinder.unbind();//解除绑定，官方文档只对fragment做了解绑
-        if (mPresenter != null) mPresenter.onDestroy();
+        for (BasePresenter presenter : mPresenters) {
+            presenter.onDestroy();
+        }
         if (mRxManager != null) {
             mRxManager.clear();
         }
@@ -138,7 +113,7 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
 
         public MyHandler(BaseActivity activity) {
 
-            mActivity = new WeakReference<BaseActivity>(activity);
+            mActivity = new WeakReference<>(activity);
         }
 
         @Override

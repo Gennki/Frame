@@ -1,23 +1,21 @@
-package com.qzb.frame.app.acty;
+package com.qzb.frame.app.fragment;
 
-import android.util.Log;
 import android.widget.TextView;
 
-import com.qzb.common.base.BaseActivity;
+import com.qzb.common.base.BaseFragment;
 import com.qzb.frame.R;
 import com.qzb.frame.app.contract.TestContract;
 import com.qzb.frame.app.model.TestModel;
 import com.qzb.frame.app.presenter.TestPresenter;
 
-public class MainActivity extends BaseActivity implements TestContract.View {
+public class MainFragment extends BaseFragment implements TestContract.View {
 
-
-    private TextView contentTV;
     private TestPresenter testPresenter;
+    private TextView contentTV;
 
     @Override
-    public int getLayoutId() {
-        return R.layout.activity_main;
+    protected int getLayoutResource() {
+        return R.layout.fragment_main;
     }
 
     @Override
@@ -26,9 +24,14 @@ public class MainActivity extends BaseActivity implements TestContract.View {
     }
 
     @Override
-    public void initView() {
-        contentTV = findViewById(R.id.am_tv_content);
+    protected void initView() {
+        contentTV = rootView.findViewById(R.id.fm_tv_content);
         testPresenter.getBaiduData();
+    }
+
+    @Override
+    public void getBaiduData(String htmlContents) {
+        contentTV.setText(htmlContents);
     }
 
     @Override
@@ -43,13 +46,6 @@ public class MainActivity extends BaseActivity implements TestContract.View {
 
     @Override
     public void showErrorTip(String msg) {
-        Log.e(TAG, "showErrorTip: ===>" + msg);
-    }
 
-    @Override
-    public void getBaiduData(String htmlContents) {
-        contentTV.setText(htmlContents);
-        Log.e(TAG, htmlContents);
     }
-
 }

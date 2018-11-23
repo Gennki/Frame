@@ -13,12 +13,12 @@ public class TestPresenter extends TestContract.Presenter {
     public void getBaiduData() {
         mRxManage.add(mModel.getBaiduData().subscribe(new Consumer<String>() {
             @Override
-            public void accept(String s) throws Exception {
+            public void accept(String s) {
                 mView.getBaiduData(s);
             }
         }, new Consumer<Throwable>() {
             @Override
-            public void accept(Throwable throwable) throws Exception {
+            public void accept(Throwable throwable) {
                 mView.showErrorTip("服务器繁忙请稍后再试");
             }
         }));

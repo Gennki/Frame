@@ -10,7 +10,7 @@ import com.qzb.common.baserx.RxManager;
  * Created by xsf
  * on 2016.07.11:55
  */
-public abstract class BasePresenter<T, E> {
+public class BasePresenter<T, E> {
     public Context mContext;
     public E mModel;
     public T mView;

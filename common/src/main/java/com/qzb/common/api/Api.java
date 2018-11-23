@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.SparseArray;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.qzb.common.baseapp.BaseApplication;
 import com.qzb.common.util.NetWorkUtils;
 
@@ -101,10 +103,10 @@ public class Api {
                 .cache(cache)//
                 .build();
 
-//        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").serializeNulls().create();
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").serializeNulls().create();
         retrofit = new Retrofit.Builder()//
                 .client(okHttpClient)//
-//                .addConverterFactory(GsonConverterFactory.create(gson))//
+                .addConverterFactory(GsonConverterFactory.create(gson))//
                 .addConverterFactory(GsonConverterFactory.create())//
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//
                 .baseUrl(ApiConstants.getHost(hostType))//

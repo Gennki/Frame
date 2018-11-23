@@ -18,13 +18,4 @@ public class TUtil {
         }
         return null;
     }
-
-    public static Class<?> forName(String className) {
-        try {
-            return Class.forName(className);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 }
