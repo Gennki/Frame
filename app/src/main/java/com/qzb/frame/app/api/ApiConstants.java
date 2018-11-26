@@ -1,4 +1,4 @@
-package com.qzb.common.api;
+package com.qzb.frame.app.api;
 
 /**
  * Created by QinZB on 2017/9/3.

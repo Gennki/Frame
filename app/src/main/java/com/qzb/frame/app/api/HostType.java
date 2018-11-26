@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package com.qzb.common.api;
+package com.qzb.frame.app.api;
 
 public class HostType {
 

@@ -1,7 +1,7 @@
 package com.qzb.frame.app.model;
 
-import com.qzb.common.api.Api;
-import com.qzb.common.api.HostType;
+import com.qzb.frame.app.api.Api;
+import com.qzb.frame.app.api.HostType;
 import com.qzb.frame.app.contract.TestContract;
 
 import io.reactivex.Observable;

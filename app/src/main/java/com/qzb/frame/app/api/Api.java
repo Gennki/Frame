@@ -1,4 +1,4 @@
-package com.qzb.common.api;
+package com.qzb.frame.app.api;
 
 
 import android.support.annotation.NonNull;

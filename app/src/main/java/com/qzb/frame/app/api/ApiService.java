@@ -1,4 +1,4 @@
-package com.qzb.common.api;
+package com.qzb.frame.app.api;
 
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
