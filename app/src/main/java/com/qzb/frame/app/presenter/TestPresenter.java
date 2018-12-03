@@ -1,6 +1,8 @@
 package com.qzb.frame.app.presenter;
 
+import com.google.gson.JsonObject;
 import com.qzb.frame.app.contract.TestContract;
+import com.qzb.frame.app.utils.ErrorUtils;
 
 import io.reactivex.functions.Consumer;
 
@@ -24,5 +26,20 @@ public class TestPresenter extends TestContract.Presenter {
         }));
 
 
+    }
+
+    @Override
+    public void login() {
+        mRxManage.add(mModel.login().subscribe(new Consumer<JsonObject>() {
+            @Override
+            public void accept(JsonObject jsonObject) throws Exception {
+                mView.loginSuccess(jsonObject.toString());
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                mView.loginSuccess(ErrorUtils.getErrorMessage(throwable));
+            }
+        }));
     }
 }

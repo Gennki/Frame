@@ -31,7 +31,7 @@ public class HostType {
     /**
      * JFinal服务器host
      */
-    public static final int TYPE_JFINAL = 2;
+    public static final int TYPE_TENCENT = 2;
 
 
 }

@@ -26,12 +26,17 @@ public class MainFragment extends BaseFragment implements TestContract.View {
     @Override
     protected void initView() {
         contentTV = rootView.findViewById(R.id.fm_tv_content);
-        testPresenter.getBaiduData();
+        testPresenter.login();
     }
 
     @Override
     public void getBaiduData(String htmlContents) {
         contentTV.setText(htmlContents);
+    }
+
+    @Override
+    public void loginSuccess(String loginInfo) {
+        contentTV.setText(loginInfo);
     }
 
     @Override

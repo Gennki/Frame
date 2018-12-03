@@ -52,4 +52,9 @@ public class MainActivity extends BaseActivity implements TestContract.View {
         Log.e(TAG, htmlContents);
     }
 
+    @Override
+    public void loginSuccess(String loginInfo) {
+
+    }
+
 }

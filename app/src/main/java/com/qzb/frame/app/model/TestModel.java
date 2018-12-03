@@ -1,5 +1,6 @@
 package com.qzb.frame.app.model;
 
+import com.google.gson.JsonObject;
 import com.qzb.frame.app.api.Api;
 import com.qzb.frame.app.api.HostType;
 import com.qzb.frame.app.contract.TestContract;
@@ -30,4 +31,13 @@ public class TestModel implements TestContract.Model {
                 .observeOn(AndroidSchedulers.mainThread());
 
     }
+
+    @Override
+    public Observable<JsonObject> login() {
+        return Api.getDefault(HostType.TYPE_TENCENT)//
+                .login("18251986292", "qzb")//
+                .subscribeOn(Schedulers.io())//
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
 }

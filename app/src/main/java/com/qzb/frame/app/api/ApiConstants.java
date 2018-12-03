@@ -7,7 +7,7 @@ package com.qzb.frame.app.api;
 public class ApiConstants {
 
     private static final String BAIDU_HOST = "http://www.baidu.com/";
-    private static final String JFINAL_HOST = "http://192.168.3.22:10086/";
+    private static final String TENCENT_CLOUDE = "http://139.199.14.212:4000/";
 
 
     /**
@@ -22,8 +22,8 @@ public class ApiConstants {
             case HostType.TYPE_BAIDU:
                 host = BAIDU_HOST;
                 break;
-            case HostType.TYPE_JFINAL:
-                host = JFINAL_HOST;
+            case HostType.TYPE_TENCENT:
+                host = TENCENT_CLOUDE;
                 break;
             default:
                 host = "";
